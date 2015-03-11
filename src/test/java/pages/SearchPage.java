@@ -1,28 +1,28 @@
-//package pages;
-//
-//import org.openqa.selenium.By;
-//import webdriver.Browser;
-//
-//
-//public class SearchPage extends AbstractPage {
-//    String searchName = "Volkswagen Caddy";
-//
-//    public SearchPage(Browser driver) {
-//        super(driver);
-//    }
-//
-//    public void search()
-//    {
-//        driver.findElement(By.id("headerSearch")).sendKeys(searchName);
-//        driver.findElement(By.id("submit-searchmain")).click();
-//      //  String foundName = driver.findElement(By.className("marginright5")).getText();
-//    }
-//
-//    public  boolean isOpened()
-//    {
-//        boolean ok = false;
-//        if (driver.findElement(By.className("marginright5")).getText().equalsIgnoreCase("Caddy"))
-//            ok = true;
-//        return ok;
-//    }
-//}
+package pages;
+
+import org.openqa.selenium.By;
+import webdriver.Browser;
+
+
+public class SearchPage extends AbstractPage {
+
+    String searchName = "Volkswagen Caddy";
+    private static final By searchField = By.id("headerSearch");
+    private static final By submitButton = By.id("submit-searchmain");
+    private static final By offer = By.className("offer");
+
+    public SearchPage(Browser driver) {
+        super(driver);
+    }
+
+    public void search()
+    {
+        driver.findElement(searchField).sendKeys(searchName);
+        driver.findElement(submitButton).click();
+    }
+
+    public  boolean isOpened()
+    {
+        return driver.findElement(offer).getText().contains("Caddy");
+    }
+}

@@ -1,12 +1,10 @@
 package functional;
 
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import utils.PropertyLoader;
 import webdriver.Browser;
-
-import java.io.File;
-import java.util.concurrent.TimeUnit;
+import webdriver.BrowserFactory;
 
 
 public class AbstractTest {
@@ -15,10 +13,7 @@ public class AbstractTest {
     @BeforeSuite
     public void initEnv()
     {
-        File file = new File("d:\\Selenium\\chromedriver.exe");
-        System.setProperty("webdriver.chrome.browser",file.getAbsolutePath());
-        browser = new Browser(new FirefoxDriver());
-        browser.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        browser = BrowserFactory.create(PropertyLoader.loadProperty("browser"));
     }
 
     @AfterSuite

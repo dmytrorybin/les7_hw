@@ -1,24 +1,26 @@
 package functional;
 
+import entities.Advertisement;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 import pages.*;
 
 
 public class FilteringTest extends AbstractTest{
-    //    @Test
-//    public  void searchTest()
-//    {
-//        searchItem();
-//        SearchPage searchpage = new SearchPage(browser);
-//        Assert.assertTrue(searchpage.isOpened());
-//    }
+
+   //     @Test
+    public  void searchTest()
+    {
+        searchItem();
+        SearchPage searchpage = new SearchPage(browser);
+        Assert.assertTrue(searchpage.isOpened());
+    }
 
 
-    @Test
+   // @Test
     public void newAdvertTest()
     {
-        addNewAdvert();
+
+        addNewAdvert(true);
         AdvertPage advert = new AdvertPage(browser);
         Assert.assertTrue( advert.isOpened());
     }
@@ -31,12 +33,20 @@ public class FilteringTest extends AbstractTest{
         openDetskayaOdezhda();
     }
 
+  //  @Test
+    public void conditionFilterTest()
+    {
+        openDetskiyMir();
+        openDetskayaOdezhda();
+        sortByNew();
+    }
+
    // @Test
     public void priceFilterTest()
     {
         openDetskiyMir();
         openDetskayaOdezhda();
-        sortByNew();
+        sortByPrice();
     }
 
 
@@ -52,6 +62,12 @@ public class FilteringTest extends AbstractTest{
     {
         ChildDressPage childDressPage = new ChildDressPage(browser);
         Assert.assertTrue(childDressPage.sortByNew(), "Sorted by new ");
+    }
+
+    public void sortByPrice()
+    {
+        ChildDressPage childDressPage = new ChildDressPage(browser);
+        Assert.assertTrue(childDressPage.sortByPrice(), "Sorted by price ");
     }
 
     public void openDetskiyMir()
@@ -71,21 +87,33 @@ public class FilteringTest extends AbstractTest{
         Assert.assertTrue(childDressPage.isOpened());
     }
 
-    public void addNewAdvert()
+    public void isPositive(boolean correct)
+    {
+
+    }
+
+    public void addNewAdvert(boolean correct)
     {
         HomePage homePage = new HomePage(browser);
         homePage.open();
-        AdvertPage adverbpage = new AdvertPage(browser);
-       // adverbpage.useJSTest();
-        adverbpage.newAdvert();
-        adverbpage.fillAdvert();
+
+        Advertisement advertisement;
+        if (correct == true) {
+            advertisement = new Advertisement(true);
+        }
+        else {
+           advertisement = new Advertisement(false);
+        }
+        AdvertPage advertpage = new AdvertPage(browser);
+        advertpage.newAdvert();
+        advertpage.fillAdvert(advertisement);
     }
 
-//    public void searchItem()
-//    {
-//        HomePage homePage = new HomePage(browser);
-//        homePage.open();
-//        SearchPage searchpage = new SearchPage(browser);
-//        searchpage.search();
-//    }
+    public void searchItem()
+    {
+        HomePage homePage = new HomePage(browser);
+        homePage.open();
+        SearchPage searchpage = new SearchPage(browser);
+        searchpage.search();
+    }
 }

@@ -5,7 +5,9 @@
 
     <test name="SmokeTest">
         <classes>
-            <class name="functional.FilteringTest" />
-        </classes>
-    </test>
-</suite>
+
+            <class name="negative.AdvertisementTest" />
+            <!--    <class name="functional.FilteringTest" /> -->
+           </classes>
+       </test>
+   </suite>
