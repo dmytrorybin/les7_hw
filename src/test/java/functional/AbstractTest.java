@@ -1,7 +1,7 @@
 package functional;
 
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import utils.PropertyLoader;
 import webdriver.Browser;
 import webdriver.BrowserFactory;
@@ -10,13 +10,14 @@ import webdriver.BrowserFactory;
 public class AbstractTest {
     public Browser browser;
 
-    @BeforeSuite
+
+    @BeforeClass
     public void initEnv()
     {
         browser = BrowserFactory.create(PropertyLoader.loadProperty("browser"));
     }
 
-    @AfterSuite
+    @AfterClass
     public void shutEnv()
     {
         if (browser != null)

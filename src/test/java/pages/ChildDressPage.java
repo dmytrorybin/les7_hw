@@ -2,12 +2,16 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import webdriver.Browser;
 
 import java.util.List;
 
 
-public class ChildDressPage extends AbstractPage{
+public class ChildDressPage extends AbstractPage {
+
+    private boolean isOk;
 
     private static final By mainCategory = By.id("main-category-choose-label");
     private static final By stateDropownList = By.cssSelector("#param_state>div>a");
@@ -17,56 +21,61 @@ public class ChildDressPage extends AbstractPage{
     private static final By minPriceEnter = By.className("min-value-input");
     private static final By maxPriceList = By.xpath(".//*[@id='param_price']/div/div[2]/a");
     private static final By maxPriceEnter = By.className("max-value-input");
+    String minPrice = "100";
+    String maxPrice = "500";
 
     private static final By submitButton = By.id("search-submit");
+    private static final By elementsPriceList = By.cssSelector(".td-price>div>p>strong");
+    private static final By elementsConditionList = By.cssSelector("a[title*='Нові']");
 
-    private static final By elementsList = By.className("td-price");
+    String proofURL = "detskiy-mir/detskaya-odezhda/";
+    String proofWord = "Дитячий одяг";
 
-    public ChildDressPage(Browser driver){super(driver);}
-
-    public boolean isOpened(){
-       return (driver.getCurrentUrl().contains("detskiy-mir/detskaya-odezhda/")
-            && driver.findElement(mainCategory).getText().contains("Дитячий одяг")
-        );
+    public ChildDressPage(Browser driver) {
+        super(driver);
     }
 
-    public Boolean sortByNew(){
+
+    public Boolean sortByNew() {
         driver.findElement(mainCategory).click();
         driver.findElement(stateDropownList).click();
         driver.findElement(detailsLink).click();
-        List<WebElement> elements = driver.findElements(By.cssSelector("a"));
-        Boolean ok = false;
-        for (int i=0; i<elements.size(); i++)
-            if (elements.get(i).getText().equalsIgnoreCase("Нові"))
-                ok = true;
-        driver.navigate().back();
+        (new WebDriverWait(driver, 10)).until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector(".listOverlay>div"))));
+       // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
+        Boolean ok = false;
+
+       // if (driver.findElement(elementsConditionList).getText().equalsIgnoreCase("Нові"))
+        if (driver.findElement(elementsConditionList).isDisplayed())
+            ok = true;
         return ok;
     }
 
-    public Boolean sortByPrice()
-    {
+
+    public boolean sortByPrice() {
         driver.findElement(minPriceList).click();
-        driver.findElement(minPriceEnter).sendKeys("100");
+        driver.findElement(minPriceEnter).sendKeys(minPrice);
 
         driver.findElement(maxPriceList).click();
-        driver.findElement(maxPriceEnter).sendKeys("500");
+        driver.findElement(maxPriceEnter).sendKeys(maxPrice);
 
         driver.findElement(submitButton).click();
-        List<WebElement> elements = driver.findElements(elementsList);
-        Boolean ok = false;
-        for (int i=0; i<elements.size(); i++) {
-            String string = elements.get(i).getText();
-            if ((int) (Integer.parseInt(string)) < 500 && (int) (Integer.valueOf(string)) > 100)
+
+        List<WebElement> elements = driver.findElements(elementsPriceList);
+        boolean ok = false;
+        for (WebElement element : elements) {
+            String string = element.getText();
+            int foundPrice = Integer.valueOf(string.substring(0, string.indexOf(" ")));
+            if (foundPrice <= Integer.valueOf(maxPrice) && foundPrice >= Integer.valueOf(minPrice))
                 ok = true;
         }
-        driver.navigate().back();
-
         return ok;
-
-      //  driver.findElement(By.cssSelector(".marginright5.link.linkWithHash." +
-      //          "detailsLink>span")).click();
     }
 
 
+    public boolean isOpened() {
+        return (driver.getCurrentUrl().contains(proofURL)
+                && driver.findElement(mainCategory).getText().contains(proofWord)
+        );
+    }
 }

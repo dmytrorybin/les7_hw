@@ -10,6 +10,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
 import utils.PropertyLoader;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,8 +44,8 @@ public class BrowserFactory {
         } else
         if (browser.equals(CHROME))
         {
-            //system.property (env variable) = "webdriver.chrome.driver"
-            System.setProperty("webdriver.chrome.driver","D:\\Selenium\\chromedriver.exe");
+            String ChromeFilePath = new File(System.getProperty("user.dir") + "/src/test/resources/chromedriver.exe").getAbsolutePath();
+            System.setProperty("webdriver.chrome.driver",ChromeFilePath);
             driver = new ChromeDriver(capabilities);
         } else
         if (browser.equals(HTML_UNIT))

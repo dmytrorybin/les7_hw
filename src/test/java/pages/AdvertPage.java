@@ -50,14 +50,17 @@ public class AdvertPage extends AbstractPage {
     private static final By errPhone = By.cssSelector("label[for = 'add-phone']");
     private static final By errICQ = By.cssSelector("label[for = 'add-gg']");
     private static final By errSkype = By.cssSelector("label[for = 'add-skype']");
+    String proofURL = "post-new-ad/";
 
     public AdvertPage(Browser driver) {
         super(driver);
     }
 
+
     public void newAdvert() {
         driver.findElement(createAdvertisement).click();
     }
+
 
     public void fillAdvert(Advertisement adv) {
         driver.findElement(advTitle).sendKeys(adv.title);
@@ -79,19 +82,7 @@ public class AdvertPage extends AbstractPage {
 
         driver.findElement(advAddPic).click();
         setClipboardData(adv.photoFilePath);
-        Robot robot = null;
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-        robot.setAutoDelay(1000);
-        robot.keyPress(KeyEvent.VK_CONTROL);
-        robot.keyPress(KeyEvent.VK_V);
-        robot.keyRelease(KeyEvent.VK_V);
-        robot.keyRelease(KeyEvent.VK_CONTROL);
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyRelease(KeyEvent.VK_ENTER);
+        robotAddPic();
 
         driver.findElement(advRegion).click();
         driver.findElement(chooseRegion).click();
@@ -109,11 +100,17 @@ public class AdvertPage extends AbstractPage {
         driver.findElement(prewiew).click();
     }
 
-    public boolean isOpened() {
+    public boolean isOpened(){
+        return (driver.getCurrentUrl().contains(proofURL));
+    }
+
+
+    public boolean isPreviewOpened() {
         return driver.findElement(prewiewBar).isDisplayed();
     }
 
-    public boolean isError()
+
+    public boolean isErrorMessagesDisplayed()
     {
         if (driver.findElement(errTitle).isDisplayed() &&
             driver.findElement(errPrice).isDisplayed() &&
@@ -127,7 +124,24 @@ public class AdvertPage extends AbstractPage {
             return true;
         }
         else
-            return  false;
+            return false;
+    }
+
+    public void robotAddPic()
+    {
+        Robot robot = null;
+        try {
+            robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+        robot.setAutoDelay(1000);
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_V);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_ENTER);
+        robot.keyRelease(KeyEvent.VK_ENTER);
     }
 
     public static void setClipboardData(String string) {

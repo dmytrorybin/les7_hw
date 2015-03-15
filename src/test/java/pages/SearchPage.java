@@ -6,10 +6,10 @@ import webdriver.Browser;
 
 public class SearchPage extends AbstractPage {
 
-    String searchName = "Volkswagen Caddy";
+    String searchName = "Caddy";
     private static final By searchField = By.id("headerSearch");
     private static final By submitButton = By.id("submit-searchmain");
-    private static final By offer = By.className("offer");
+    private static final By offers = By.className("offer");
 
     public SearchPage(Browser driver) {
         super(driver);
@@ -23,6 +23,6 @@ public class SearchPage extends AbstractPage {
 
     public  boolean isOpened()
     {
-        return driver.findElement(offer).getText().contains("Caddy");
+        return driver.findElement(offers).getText().contains(searchName);
     }
 }

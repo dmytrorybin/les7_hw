@@ -3,11 +3,36 @@
 <suite name="firstTestSuite" verbose="1" >
     <parameter name="expectedCount" value="2"/>
 
-    <test name="SmokeTest">
+    <test name="filtering">
         <classes>
+            <class name="functional.FilteringTest" />
+        </classes>
+    </test>
 
-            <class name="negative.AdvertisementTest" />
-            <!--    <class name="functional.FilteringTest" /> -->
-           </classes>
-       </test>
-   </suite>
+    <test name="searching">
+        <classes>
+            <class name="functional.SearchingTest" />
+        </classes>
+    </test>
+
+    <test name="positive-advert">
+        <classes>
+            <class name="functional.PositiveAdvertisementTest" />
+        </classes>
+    </test>
+
+    <test name="negative-advert">
+    <classes>
+        <class name="negative.NegativeAdvertisementTest" />
+    </classes>
+    </test>
+
+    <!--  <test name="SmokeTest"> -->
+    <!-- <classes> -->
+            <!--   <class name="functional.SearchingTest" /> -->
+            <!--         <class name="functional.FilteringTest" /> -->
+            <!--       <class name="functional.PositiveAdvertisementTest" /> -->
+               <!--     <class name="negative.NegativeAdvertisementTest" /> -->
+            <!--   </classes> -->
+    <!--    </test> -->
+            </suite>
