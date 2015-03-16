@@ -40,13 +40,20 @@ public class ChildDressPage extends AbstractPage {
         driver.findElement(mainCategory).click();
         driver.findElement(stateDropownList).click();
         driver.findElement(detailsLink).click();
-        (new WebDriverWait(driver, 10)).until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector(".listOverlay>div"))));
+
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+      //  (new WebDriverWait(driver, 10)).until(ExpectedConditions.stalenessOf(driver.findElement(By.cssSelector(".listOverlay>div"))));
        // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         Boolean ok = false;
 
-       // if (driver.findElement(elementsConditionList).getText().equalsIgnoreCase("Нові"))
-        if (driver.findElement(elementsConditionList).isDisplayed())
+      //  if (driver.findElement(elementsConditionList).getText().equalsIgnoreCase("Нові"))
+       // if (driver.findElement(elementsConditionList).isDisplayed())
+        if (driver.findElement(elementsConditionList).getText().contains("Нові"))
             ok = true;
         return ok;
     }
@@ -61,14 +68,22 @@ public class ChildDressPage extends AbstractPage {
 
         driver.findElement(submitButton).click();
 
-        List<WebElement> elements = driver.findElements(elementsPriceList);
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    //    List<WebElement> elements = driver.findElements(elementsPriceList);
+
         boolean ok = false;
-        for (WebElement element : elements) {
-            String string = element.getText();
+       // for (WebElement element : elements) {
+        //    String string = element.getText();
+        String string = driver.findElement(elementsPriceList).getText();
             int foundPrice = Integer.valueOf(string.substring(0, string.indexOf(" ")));
             if (foundPrice <= Integer.valueOf(maxPrice) && foundPrice >= Integer.valueOf(minPrice))
                 ok = true;
-        }
+      //  }
         return ok;
     }
 

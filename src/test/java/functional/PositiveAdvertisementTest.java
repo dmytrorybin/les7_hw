@@ -2,6 +2,7 @@ package functional;
 
 import entities.Advertisement;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 import pages.AdvertPage;
 import pages.HomePage;
 
@@ -10,7 +11,7 @@ import pages.HomePage;
  */
 public class PositiveAdvertisementTest extends AbstractTest {
 
-   // @Test
+    //@Test
     public void newAdvertTest() {
         openAddAdvertisement();
     }

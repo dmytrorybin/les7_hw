@@ -1,6 +1,7 @@
 package functional;
 
 import org.testng.Assert;
+import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.SearchPage;
 
@@ -10,7 +11,7 @@ import pages.SearchPage;
 public class SearchingTest extends AbstractTest {
 
 
-  //  @Test
+    @Test
     public void searchTest() {
         searchItem();
     }

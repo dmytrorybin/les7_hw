@@ -3,6 +3,7 @@ package negative;
 import entities.Advertisement;
 import functional.AbstractTest;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 import pages.AdvertPage;
 import pages.HomePage;
 

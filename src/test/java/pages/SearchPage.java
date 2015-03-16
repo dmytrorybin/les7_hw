@@ -19,6 +19,11 @@ public class SearchPage extends AbstractPage {
     {
         driver.findElement(searchField).sendKeys(searchName);
         driver.findElement(submitButton).click();
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public  boolean isOpened()
